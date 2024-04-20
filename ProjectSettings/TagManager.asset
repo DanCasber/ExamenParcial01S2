@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Goal
+  - Player1
+  - Player2
+  - Player3
+  - Player4
+  - NumLaps
   layers:
   - Default
   - TransparentFX
