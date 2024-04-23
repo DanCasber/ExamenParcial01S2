@@ -10,6 +10,9 @@ TagManager:
   - Player3
   - Player4
   - NumLaps
+  - Placement
+  - PlacementCanvas
+  - PlacementShadow
   layers:
   - Default
   - TransparentFX
