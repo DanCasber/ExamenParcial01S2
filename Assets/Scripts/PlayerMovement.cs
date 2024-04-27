@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI placementText;
     [SerializeField] private TextMeshProUGUI placementShadowText;
 
+    private float currentSpeed;
+    private float speedFast = 0;
+    private float speedItemDuration = 5f;
+    private bool isBoosted = false;
     private int lapsCompleted = 0;
     private int totalLaps = 3;
 
@@ -34,6 +38,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         {
             ResetPlacement();
         }
+
+        speedFast = speed + 5;
+        currentSpeed = speed;
     }
 
     private void ResetPlacement()
@@ -48,10 +55,28 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     {
         if (view.IsMine)
         {
-            if (Input.GetKey("d")) transform.position += Vector3.right * speed * Time.deltaTime;
-            if (Input.GetKey("a")) transform.position += Vector3.left * speed * Time.deltaTime;
-            if (Input.GetKey("w")) transform.position += Vector3.forward * speed * Time.deltaTime;
-            if (Input.GetKey("s")) transform.position += Vector3.back * speed * Time.deltaTime;
+            if (isBoosted)
+            {
+                Debug.Log("SpeedUp: " + currentSpeed);
+                // Reduce the duration of the boost
+                speedItemDuration -= Time.deltaTime;
+
+                // Check if speedUp duration has expired
+                if (speedItemDuration <= 0)
+                {
+                    // Reset the speed and flags
+                    currentSpeed = speed;
+                    isBoosted = false;
+                }
+            }
+
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            Vector3 movementDirection = new Vector3(horizontal, 0, vertical);
+            movementDirection.Normalize();
+
+            transform.position += movementDirection * currentSpeed * Time.deltaTime;
         }
     }
 
@@ -71,6 +96,16 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 placementText.text = GetPlacementText(placement);
                 placementShadowText.text = GetPlacementText(placement);
             }
+        }
+
+        if (view.IsMine && other.gameObject.CompareTag("SpeedUpItem"))
+        {
+            // Increase speed and set the flag
+            currentSpeed = speedFast;
+            isBoosted = true;
+
+            // Start the countdown for the boost duration
+            speedItemDuration = 5f;
         }
     }
 

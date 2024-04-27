@@ -5020,7 +5020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528a7e0ed79e29c438523af6e325ade5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theRB: {fileID: 0}
+  theRB: {fileID: 3708839278147888942}
   fowardAccel: 8
   reverseAccel: 4
   maxSpeed: 50
@@ -5031,7 +5031,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   groundRayLength: 0.5
-  groundRayPoint: {fileID: 0}
+  groundRayPoint: {fileID: 3708839278498694731}
 --- !u!1 &3708839278498694730
 GameObject:
   m_ObjectHideFlags: 0
